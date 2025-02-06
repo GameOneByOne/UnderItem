@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PaperCharacter.h"
+#include "Components/BoxComponent.h"
 #include "Config/CharacterConfig.h"
 #include "CharacterBase.generated.h"
 
@@ -24,7 +25,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float delta) override;
 
+protected:
+	TObjectPtr<UBoxComponent> CollisionAndInteractComponent;
 public:
 	int32 CurrentHP;
 	int32 CurrentAttackPower;

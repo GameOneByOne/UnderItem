@@ -19,8 +19,19 @@ ACharacterBase::ACharacterBase()
 	if (LoadDataTable.Succeeded()) {
 		CharacterConfigDataTable = LoadDataTable.Object;
 	}
+
+	CollisionAndInteractComponent = CreateDefaultSubobject<UBoxComponent>("CollisionAndInteractComponent");
+	CollisionAndInteractComponent->SetupAttachment(RootComponent);
+	CollisionAndInteractComponent->SetBoxExtent({20,20,20});
+	
 	GetCapsuleComponent()->SetCapsuleSize(10, 15);
 	GetSprite()->SetRelativeRotation({0, 0, 270});
+	
+	CollisionAndInteractComponent->SetCollisionEnabled(ECollisionEnabled::Type::QueryOnly);
+	CollisionAndInteractComponent->SetCollisionObjectType(ECollisionChannel::ECC_Pawn);
+	CollisionAndInteractComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
+	CollisionAndInteractComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECR_Overlap);
+	CollisionAndInteractComponent->SetGenerateOverlapEvents(true);
 }
 
 void ACharacterBase::BeginPlay()
@@ -73,6 +84,11 @@ void ACharacterBase::RecoverHP(int32 HP)
 bool ACharacterBase::IsDead() const
 {
 	return CurrentHP == 0;	
+}
+
+void ACharacterBase::Tick(float delta)
+{
+	Super::Tick(delta);
 }
 
 

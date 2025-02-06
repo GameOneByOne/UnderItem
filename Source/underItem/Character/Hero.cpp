@@ -28,6 +28,8 @@ AHero::AHero()
     
     InputMapping = Cast<UInputMappingContext>(LoadObject<UInputMappingContext>(nullptr, *PLAYER_INPUT_MAPPING_REF));
     InputActionMove = Cast<UInputAction>(LoadObject<UInputAction>(nullptr, *PLAYER_INPUT_ACTION_MOVE_REF));
+
+    CollisionAndInteractComponent->OnComponentBeginOverlap.AddDynamic(this, &AHero::CollisionWithActor);
 }
 
 void AHero::BeginPlay()
@@ -59,5 +61,12 @@ void AHero::Move(const FInputActionValue& Value)
     FVector2D MoveVector = Value.Get<FVector2D>();
     AddMovementInput({MoveVector.X, 0, 0}, 1);
     AddMovementInput({0, MoveVector.Y, 0}, 1);
+}
+
+void AHero::CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    INFOLOG("?????????????????????????");
+    return;
 }
 

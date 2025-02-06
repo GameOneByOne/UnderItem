@@ -22,6 +22,7 @@ private:
 	
 public:
 	ACharacterBase();
+	virtual void BeginInteract();
 
 protected:
 	virtual void BeginPlay() override;

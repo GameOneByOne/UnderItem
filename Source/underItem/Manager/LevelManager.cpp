@@ -4,6 +4,7 @@
 #include "LevelManager.h"
 #include "Utils/log.h"
 #include "Character/CharacterBase.h"
+#include "Character/Monster.h"
 #include "Kismet/GameplayStatics.h"
 
 namespace {
@@ -57,9 +58,9 @@ void ALevelManager::Generate()
 			// 开始生成
 			FVector Location = {static_cast<double>(RandomX), static_cast<double>(RandomY), 10};
 			FRotator Rotation = {0, 0, 0};
-			TObjectPtr<ACharacterBase> Character = Cast<ACharacterBase>(GetWorld()->SpawnActor(ACharacterBase::StaticClass(), &Location, &Rotation));
-			if (Character->IsValidLowLevel()) {
-				Character->SetCharacter("Hero1");
+			TObjectPtr<ACharacterBase> Monster = Cast<AMonster>(GetWorld()->SpawnActor(AMonster::StaticClass(), &Location, &Rotation));
+			if (Monster->IsValidLowLevel()) {
+				Monster->SetCharacter("Hero1");
 				INFOLOG("[Level Mgr] Generate Monster In (%d,  %d)", RandomX, RandomY);
 			} else {
 				ERRORLOG("[Level Mgr] Spawn Actor failed.");

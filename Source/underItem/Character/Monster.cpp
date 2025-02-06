@@ -2,4 +2,10 @@
 
 
 #include "Character/Monster.h"
+#include "Utils/log.h"
 
+void AMonster::BeginInteract()
+{
+    INFOLOG("!!!!!!!!!!!!!!!!!!!!!!!");
+    return;
+}

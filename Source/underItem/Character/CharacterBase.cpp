@@ -22,7 +22,7 @@ ACharacterBase::ACharacterBase()
 
 	CollisionAndInteractComponent = CreateDefaultSubobject<UBoxComponent>("CollisionAndInteractComponent");
 	CollisionAndInteractComponent->SetupAttachment(RootComponent);
-	CollisionAndInteractComponent->SetBoxExtent({20,20,20});
+	CollisionAndInteractComponent->SetBoxExtent({10,10,12});
 	
 	GetCapsuleComponent()->SetCapsuleSize(10, 15);
 	GetSprite()->SetRelativeRotation({0, 0, 270});
@@ -65,6 +65,11 @@ bool ACharacterBase::SetCharacter(const FString& CharacterName)
 		CurrentHP, CurrentAttackPower, CurrentDefensePower);
 
 	return true;
+}
+
+void ACharacterBase::BeginInteract()
+{
+	return;
 }
 
 void ACharacterBase::Attack(ACharacterBase* Opponent)

@@ -20,6 +20,8 @@ class UNDERITEM_API AHero : public ACharacterBase
 public:
 	AHero();
 	void Move(const FInputActionValue& Value);
+	void Interact(const FInputActionValue& Value);
+	UFUNCTION(Blueprintable)
 	void CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
@@ -32,4 +34,7 @@ private:
 	TObjectPtr<UCameraComponent> CameraComponent;
 	TObjectPtr<UInputMappingContext> InputMapping;
 	TObjectPtr<UInputAction> InputActionMove;
+	TObjectPtr<UInputAction> InputActionInteract;
+
+	TSoftObjectPtr<ACharacterBase> InteractCharacter;
 };

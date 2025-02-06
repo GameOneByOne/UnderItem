@@ -10,7 +10,7 @@
 class UPaperFlipbookComponent;
 
 namespace {
-	const FString CHARACTER_CONFIG_DATATABLE_REF = TEXT("/Script/Engine.DataTable'/Game/Data/DT_CharacterConfig.DT_CharacterConfig'");	
+	const FString CHARACTER_CONFIG_DATATABLE_REF = TEXT("/Script/Engine.DataTable'/Game/Data/DT_CharacterConfig.DT_CharacterConfig'");
 }
 
 ACharacterBase::ACharacterBase()
@@ -19,7 +19,7 @@ ACharacterBase::ACharacterBase()
 	if (LoadDataTable.Succeeded()) {
 		CharacterConfigDataTable = LoadDataTable.Object;
 	}
-	GetCapsuleComponent()->SetCapsuleSize(15, 15);
+	GetCapsuleComponent()->SetCapsuleSize(10, 15);
 	GetSprite()->SetRelativeRotation({0, 0, 270});
 }
 

@@ -3,11 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputAction.h"
 #include "Camera/CameraComponent.h"
 #include "Character/CharacterBase.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Hero.generated.h"
 
+
+class UInputMappingContext;
 
 UCLASS(Blueprintable, BlueprintType)
 class UNDERITEM_API AHero : public ACharacterBase
@@ -16,13 +19,15 @@ class UNDERITEM_API AHero : public ACharacterBase
 	
 public:
 	AHero();
+	void Move(const FInputActionValue& Value);
 
 protected:
 	virtual void BeginPlay() override;
-
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	
 private:
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 	TObjectPtr<UCameraComponent> CameraComponent;
-	class UInputMappingContext* InputMapping;
-	class UInputAction* MoveAction;
+	TObjectPtr<UInputMappingContext> InputMapping;
+	TObjectPtr<UInputAction> InputActionMove;
 };

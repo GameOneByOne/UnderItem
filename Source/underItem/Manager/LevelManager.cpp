@@ -35,7 +35,7 @@ void ALevelManager::Generate()
 	INFOLOG("[Level Mgr] Find %d Range To Generate Monster.", RangeActors.Num());
 	
 	FRandomStream RandomStream;
-	for (int i = 0; i <LevelConfig.GenerateMonsterNum; ++i) {
+	for (int i = 0; i < LevelConfig.GenerateMonsterNum; ++i) {
 		RandomStream.GenerateNewSeed();
 		int32 Result = RandomStream.RandRange(MIN_PROBABILITY, MAX_PROBABILITY);
 		int32 TotalProbability = 0;
@@ -55,12 +55,13 @@ void ALevelManager::Generate()
 			RandomStream.GenerateNewSeed();
 			int32 RandomY = RandomStream.RandRange(Origin.Y - Extend.Y / 2, Origin.Y + Extend.Y / 2);
 			INFOLOG("[Level Mgr] Generate Range  (Origin=%s , Extend=%s)", *Origin.ToString(), *Extend.ToString());
+			
 			// 开始生成
 			FVector Location = {static_cast<double>(RandomX), static_cast<double>(RandomY), 10};
 			FRotator Rotation = {0, 0, 0};
 			TObjectPtr<ACharacterBase> Monster = Cast<AMonster>(GetWorld()->SpawnActor(AMonster::StaticClass(), &Location, &Rotation));
 			if (Monster->IsValidLowLevel()) {
-				Monster->SetCharacter("Hero1");
+				Monster->SetCharacter("Skeleton");
 				INFOLOG("[Level Mgr] Generate Monster In (%d,  %d)", RandomX, RandomY);
 			} else {
 				ERRORLOG("[Level Mgr] Spawn Actor failed.");

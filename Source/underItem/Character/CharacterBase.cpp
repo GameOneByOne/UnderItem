@@ -67,7 +67,7 @@ bool ACharacterBase::SetCharacter(const FString& CharacterName)
 	return true;
 }
 
-void ACharacterBase::BeginInteract()
+void ACharacterBase::BeginInteract(TObjectPtr<ACharacterBase> ActorPtr)
 {
 	return;
 }

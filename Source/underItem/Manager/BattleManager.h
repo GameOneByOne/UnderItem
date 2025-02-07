@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Character/CharacterBase.h"
+#include "Manager/UIManager.h"
 #include "BattleManager.generated.h"
 
 UCLASS()
@@ -24,8 +25,8 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
-
-public:
 	void StartBattle(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr);
 
+private:
+	TObjectPtr<AUIManager> UIManager;
 };

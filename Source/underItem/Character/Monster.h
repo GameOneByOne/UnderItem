@@ -15,5 +15,5 @@ class UNDERITEM_API AMonster : public ACharacterBase
 	GENERATED_BODY()
 	
 public:
-	virtual void BeginInteract() override;
+	virtual void BeginInteract(TObjectPtr<ACharacterBase> ActorPtr) override;
 };

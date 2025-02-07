@@ -1,4 +1,6 @@
 #include "Manager/BattleManager.h"
+
+#include "Kismet/GameplayStatics.h"
 #include "Utils/log.h"
 
 namespace {
@@ -15,6 +17,8 @@ ABattleManager::ABattleManager()
 void ABattleManager::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	UIManager = Cast<AUIManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AUIManager::StaticClass()));
 }
 
 void ABattleManager::Tick(float DeltaTime)
@@ -57,6 +61,8 @@ void ABattleManager::StartBattle(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<
 	if (RandomStream.RandRange(1, 100) <= 50) {
 		ShouldHeroBattle = true;
 	}
+
+	UIManager->ShowBattlePanel(HeroPtr, MonsterPtr);
 	return;
 }
 

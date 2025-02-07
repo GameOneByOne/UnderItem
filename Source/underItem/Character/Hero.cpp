@@ -71,7 +71,7 @@ void AHero::Interact(const FInputActionValue& Value)
     bool IsAttack = Value.Get<bool>();
     if (InteractCharacter.IsValid()) {
         INFOLOG("[Hero] Interact With Actor, %s", *InteractCharacter->GetName());
-        InteractCharacter->BeginInteract();
+        InteractCharacter->BeginInteract(this);
     }
 }
 

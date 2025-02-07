@@ -22,7 +22,7 @@ private:
 	
 public:
 	ACharacterBase();
-	virtual void BeginInteract();
+	virtual void BeginInteract(TObjectPtr<ACharacterBase> ActorPtr);
 
 protected:
 	virtual void BeginPlay() override;

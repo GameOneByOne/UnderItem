@@ -47,6 +47,10 @@ void ABattleManager::Tick(float DeltaTime)
 	if (Hero->IsDead() || Monster->IsDead()) {
 		INFOLOG("[Battle Mgr] Battle Is Ended. Winner Is %s", Hero->IsDead() ? TEXT("Monster") : TEXT("Hero"));
 		BattleStarted = false;
+		UIManager->HideBattlePanel();
+		if (Monster->IsDead()) {
+			Monster->Destroy();	
+		}
 	}
 	return;
 }

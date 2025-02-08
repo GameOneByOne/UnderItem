@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Character/Hero.h"
+#include "Character/Monster.h"
 #include "Components/TextBlock.h"
 #include "BattlePanelWidget.generated.h"
 
@@ -17,6 +19,25 @@ class UNDERITEM_API UBattlePanelWidget : public UUserWidget
 
 public:
 	virtual bool Initialize() override;
+	void SetHeroObj(TObjectPtr<ACharacterBase> Obj);
+	UFUNCTION(BlueprintCallable)
+	FText GetHeroHP();
+	UFUNCTION(BlueprintCallable)
+	FText GetHeroAttack();
+	UFUNCTION(BlueprintCallable)
+	FText GetHeroDefense();
+	UFUNCTION(BlueprintCallable)
+	FText GetHeroName();
+	
+	void SetMonsterObj(TObjectPtr<ACharacterBase> Obj);
+	UFUNCTION(BlueprintCallable)
+	FText GetMonsterHP();
+	UFUNCTION(BlueprintCallable)
+	FText GetMonsterAttack();
+	UFUNCTION(BlueprintCallable)
+	FText GetMonsterDefense();
+	UFUNCTION(BlueprintCallable)
+	FText GetMonsterName();
 	
 public:
 	UPROPERTY(meta = (BindWidget))
@@ -27,4 +48,17 @@ public:
 	UTextBlock* HeroAttackText;
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* HeroDefenseText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MonsterNameText;
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MonsterHPText;
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MonsterAttackText;
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* MonsterDefenseText;
+	
+private:
+	TObjectPtr<ACharacterBase> HeroObj;
+	TObjectPtr<ACharacterBase> MonsterObj;
 };

@@ -17,9 +17,13 @@ public:
 	AUIManager();
 	virtual void Tick(float DeltaTime) override;
 	void ShowBattlePanel(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr);
+	void HideBattlePanel();
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	TObjectPtr<UBattlePanelWidget> BattlePanel;
 
 public:
 	TSubclassOf<UBattlePanelWidget> BattlePanelWidget;

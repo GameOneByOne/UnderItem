@@ -18,8 +18,7 @@ class UNDERITEM_API ACharacterBase : public APaperCharacter
 	
 private:
 	TObjectPtr<UDataTable> CharacterConfigDataTable = nullptr;
-	FCharacterConfig CharacterConfig;
-	
+
 public:
 	ACharacterBase();
 	virtual void BeginInteract(TObjectPtr<ACharacterBase> ActorPtr);
@@ -30,7 +29,9 @@ protected:
 
 protected:
 	TObjectPtr<UBoxComponent> CollisionAndInteractComponent;
+	
 public:
+	FCharacterConfig CharacterConfig;
 	int32 CurrentHP;
 	int32 CurrentAttackPower;
 	int32 CurrentDefensePower;

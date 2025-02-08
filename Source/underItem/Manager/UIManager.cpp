@@ -23,15 +23,33 @@ void AUIManager::BeginPlay()
 
 void AUIManager::ShowBattlePanel(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr)
 {
-	TObjectPtr<UBattlePanelWidget> BattlePanel = CreateWidget<UBattlePanelWidget>(Cast<APlayerController>(HeroPtr->GetController()), BattlePanelWidget);
+	if (BattlePanel->IsValidLowLevel()) {
+		BattlePanel->SetHeroObj(HeroPtr);
+		BattlePanel->SetMonsterObj(MonsterPtr);
+		BattlePanel->SetVisibility(ESlateVisibility::Visible);
+		return;
+	}
+	
+	BattlePanel = CreateWidget<UBattlePanelWidget>(Cast<APlayerController>(HeroPtr->GetController()), BattlePanelWidget);
 	BattlePanel->Initialize();
-	FIntPoint ScreenXY = GEngine->GameViewport->Viewport->GetSizeXY();
-
 	BattlePanel->AddToViewport();
-
 	BattlePanel->ForceLayoutPrepass();
-	FVector2D tmp = BattlePanel->GetDesiredSize();
-	BattlePanel->SetPositionInViewport({ScreenXY.X / 2.0, ScreenXY.Y / 2.0}, true);
+	FVector2D WidgetSize = BattlePanel->GetDesiredSize();
+	FIntPoint ScreenXY = GEngine->GameViewport->Viewport->GetSizeXY();
+	BattlePanel->SetPositionInViewport({(ScreenXY.X - WidgetSize.X) / 2.0, (ScreenXY.Y - WidgetSize.Y) / 2.0}, true);
+
+	BattlePanel->SetHeroObj(HeroPtr);
+	BattlePanel->SetMonsterObj(MonsterPtr);
+}
+
+void AUIManager::HideBattlePanel()
+{
+	if (BattlePanel->IsValidLowLevel()) {
+		BattlePanel->SetHeroObj(nullptr);
+		BattlePanel->SetMonsterObj(nullptr);
+		BattlePanel->SetVisibility(ESlateVisibility::Collapsed);
+	}
+	return;
 }
 
 void AUIManager::Tick(float DeltaTime)

@@ -22,7 +22,7 @@ public:
 	AHero();
 	void Move(const FInputActionValue& Value);
 	void Interact(const FInputActionValue& Value);
-	void AddItem(const FString &ItemName, int Count = 1);
+	void AddItem(TObjectPtr<UItemBase> NewItem);
 	void RemoveItem(const FString &ItemName, int Count = 1);
 	
 	UFUNCTION(Blueprintable)

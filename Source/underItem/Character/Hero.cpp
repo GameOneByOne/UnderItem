@@ -92,7 +92,7 @@ void AHero::CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor*
     return;
 }
 
-void AHero::AddItem(const FString &ItemName, int Count)
+void AHero::AddItem(TObjectPtr<UItemBase> NewItem)
 {
     TArray<UUserWidget*> FoundWidgets;
     UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UHeroBagWidget::StaticClass(), false);
@@ -103,16 +103,14 @@ void AHero::AddItem(const FString &ItemName, int Count)
 
     // 找一下当前物品栏里面有没有同样物品的
     for (const auto &Iter : ItemList) {
-        if (Iter->ItemConfig.ItemName == ItemName) {
-            Iter->Count += Count;
+        if (Iter->ItemConfig.ItemName == NewItem->ItemConfig.ItemName) {
+            Iter->Count += NewItem->Count;
             Cast<UHeroBagWidget>(FoundWidgets[0])->Update();
             return;
         }
     }
 
     // 说明没有重复的则新建物品
-    TObjectPtr<UItemBase> NewItem = NewObject<UItemBase>();
-    NewItem->SetItem(ItemName);
     ItemList.Add(NewItem);
     Cast<UHeroBagWidget>(FoundWidgets[0])->Update();
     INFOLOG("[Hero] AddItem: New Item %s", *NewItem->GetName());

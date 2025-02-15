@@ -36,10 +36,10 @@ void UHeroBagWidget::Update()
         if (i >= HeroPtr->ItemList.Num()) {  // 说明没有这么多物品，
             TObjectPtr<UItemBase> NewItem = NewObject<UItemBase>();
             BagPanel->AddItem(NewItem);
-
         } else { // 显示物品
             TObjectPtr<UItemBase> Item = HeroPtr->ItemList[i];
             BagPanel->AddItem(Item);
+            INFOLOG("123123123123123    %s", *Item->GetName());
         }
     }
 

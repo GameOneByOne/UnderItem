@@ -4,6 +4,23 @@
 #include "PaperFlipbook.h"
 #include "CharacterConfig.generated.h"
 
+class UItemBase;
+
+USTRUCT(BlueprintType)
+struct FDropItemInfo
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<UItemBase> ItemClass;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FString ItemName;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 Count;
+};
+
 USTRUCT(BlueprintType)
 struct FCharacterConfig : public FTableRowBase
 {
@@ -29,5 +46,5 @@ public:
 	int32 DefensePower;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<FString> DropItems;
+	TArray<FDropItemInfo> DropItems;
 };

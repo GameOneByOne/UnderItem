@@ -36,7 +36,6 @@ void UItemBase::SetItem(const FString& ItemName)
 
 void UItemBase::Use(TObjectPtr<ACharacterBase> CharacterObj)
 {
-	CharacterObj->RecoverHP(ItemConfig.RecoverHP);
 	Count--;
 	return;
 }

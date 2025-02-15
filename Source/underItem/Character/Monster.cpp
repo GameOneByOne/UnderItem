@@ -21,7 +21,9 @@ void AMonster::PreDestroy(TObjectPtr<ACharacterBase> ActorObj)
     
     // 掉落物品
     for (const auto &Iter : CharacterConfig.DropItems) {
-        Cast<AHero>(ActorObj)->AddItem(Iter);
+        TObjectPtr<UItemBase> Item = NewObject<UItemBase>(ActorObj, Iter.ItemClass);
+        Item->SetItem(Iter.ItemName);
+        Cast<AHero>(ActorObj)->AddItem(Item);
     }
     Destroy();
     return;

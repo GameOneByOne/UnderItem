@@ -17,10 +17,9 @@ private:
 	TObjectPtr<UDataTable> ItemConfigDataTable = nullptr;
 	
 public:	
-	// Sets default values for this actor's properties
 	UItemBase();
 	void SetItem(const FString& ItemName);
-	void Use(TObjectPtr<ACharacterBase> CharacterObj);
+	virtual void Use(TObjectPtr<ACharacterBase> CharacterObj);
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Character/CharacterBase.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Item/ItemBase.h"
 #include "Hero.generated.h"
 
 
@@ -21,9 +22,15 @@ public:
 	AHero();
 	void Move(const FInputActionValue& Value);
 	void Interact(const FInputActionValue& Value);
+	void AddItem(const FString &ItemName, int Count = 1);
+	void RemoveItem(const FString &ItemName, int Count = 1);
+	
 	UFUNCTION(Blueprintable)
 	void CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+public:
+	TArray<TObjectPtr<UItemBase>> ItemList;
 
 protected:
 	virtual void BeginPlay() override;

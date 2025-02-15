@@ -16,6 +16,7 @@ class UNDERITEM_API AGameManager : public AActor
 private:
 	TObjectPtr<ALevelManager> LevelManager = nullptr;
 	TObjectPtr<ABattleManager> BattleManager = nullptr;
+	TObjectPtr<AUIManager> UIManager = nullptr;
 	
 public:	
 	// Sets default values for this actor's properties

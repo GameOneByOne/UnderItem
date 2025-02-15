@@ -22,7 +22,8 @@ private:
 public:
 	ACharacterBase();
 	virtual void BeginInteract(TObjectPtr<ACharacterBase> ActorPtr);
-
+	virtual void PreDestroy(TObjectPtr<ACharacterBase> ActorObj);
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float delta) override;

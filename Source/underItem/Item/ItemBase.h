@@ -3,24 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Character/CharacterBase.h"
+#include "Config/ItemConfig.h"
 #include "GameFramework/Actor.h"
 #include "ItemBase.generated.h"
 
-UCLASS()
-class UNDERITEM_API AItemBase : public AActor
+UCLASS(BlueprintType)
+class UNDERITEM_API UItemBase : public UObject
 {
 	GENERATED_BODY()
+
+private:
+	TObjectPtr<UDataTable> ItemConfigDataTable = nullptr;
 	
 public:	
 	// Sets default values for this actor's properties
-	AItemBase();
+	UItemBase();
+	void SetItem(const FString& ItemName);
+	void Use(TObjectPtr<ACharacterBase> CharacterObj);
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FItemConfig ItemConfig;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int Count = 1;
 };

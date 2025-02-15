@@ -3,6 +3,7 @@
 
 #include "Manager/GameManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Manager/UIManager.h"
 #include "Utils/log.h"
 
 
@@ -16,7 +17,8 @@ void AGameManager::BeginPlay()
 	Super::BeginPlay();
 	LevelManager = Cast<ALevelManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ALevelManager::StaticClass()));
 	BattleManager = Cast<ABattleManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ABattleManager::StaticClass()));
-	if (!LevelManager->IsValidLowLevel() || !BattleManager->IsValidLowLevel()) {
+	UIManager = Cast<AUIManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AUIManager::StaticClass()));
+	if (!LevelManager->IsValidLowLevel() || !BattleManager->IsValidLowLevel() || !UIManager->IsValidLowLevel()) {
 		ERRORLOG("[Game Mgr] World Need Level Manager And Battle Manager Exist.");
 		return;
 	}
@@ -24,6 +26,9 @@ void AGameManager::BeginPlay()
 	// 生成关卡
 	LevelManager->SetLevel(1);
 	LevelManager->Generate();
+
+	// 显示UI
+	UIManager->ShowHeroBag();
 }
 
 // Called every frame

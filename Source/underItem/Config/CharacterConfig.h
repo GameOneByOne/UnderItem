@@ -28,4 +28,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 DefensePower;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TArray<FString> DropItems;
 };

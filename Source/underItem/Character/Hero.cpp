@@ -6,7 +6,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
-#include "GameFramework/PawnMovementComponent.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
+#include "UI/HeroBagWidget.h"
+#include "Item/ItemBase.h"
 #include "Utils/log.h"
 
 namespace {
@@ -48,6 +50,9 @@ void AHero::BeginPlay()
 
     // 生成玩家
     SetCharacter("Hero1");
+
+    // 设置鼠标显示
+    Cast<APlayerController>(GetController())->bShowMouseCursor = true;
 }
 
 void AHero::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -86,4 +91,38 @@ void AHero::CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor*
     INFOLOG("[Hero] Collision With Actor, %s", *InteractCharacter->GetName());
     return;
 }
+
+void AHero::AddItem(const FString &ItemName, int Count)
+{
+    TArray<UUserWidget*> FoundWidgets;
+    UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UHeroBagWidget::StaticClass(), false);
+    if (FoundWidgets.IsEmpty()) {
+        ERRORLOG("[Hero] AddItem: No Widgets found.");
+        return;
+    }
+
+    // 找一下当前物品栏里面有没有同样物品的
+    for (const auto &Iter : ItemList) {
+        if (Iter->ItemConfig.ItemName == ItemName) {
+            Iter->Count += Count;
+            Cast<UHeroBagWidget>(FoundWidgets[0])->Update();
+            return;
+        }
+    }
+
+    // 说明没有重复的则新建物品
+    TObjectPtr<UItemBase> NewItem = NewObject<UItemBase>();
+    NewItem->SetItem(ItemName);
+    ItemList.Add(NewItem);
+    Cast<UHeroBagWidget>(FoundWidgets[0])->Update();
+    INFOLOG("[Hero] AddItem: New Item %s", *NewItem->GetName());
+    return;
+}
+
+void AHero::RemoveItem(const FString &ItemName, int Count)
+{
+    return;
+}
+
+
 

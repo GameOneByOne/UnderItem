@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "UI/BattlePanelWidget.h"
 #include "ItemConfig.generated.h"
 
 class UPaperSprite;
@@ -20,7 +19,7 @@ struct FItemConfig : public FTableRowBase
 	
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FText ItemName;
+	FString ItemName;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FText ItemDesc;

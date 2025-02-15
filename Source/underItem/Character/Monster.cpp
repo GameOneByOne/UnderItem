@@ -13,3 +13,16 @@ void AMonster::BeginInteract(TObjectPtr<ACharacterBase> ActorPtr)
     BattleManager->StartBattle(ActorPtr, this);
     return;
 }
+
+void AMonster::PreDestroy(TObjectPtr<ACharacterBase> ActorObj)
+{
+    // TODO: 增加经验
+    // TODO: 增加金币
+    
+    // 掉落物品
+    for (const auto &Iter : CharacterConfig.DropItems) {
+        Cast<AHero>(ActorObj)->AddItem(Iter);
+    }
+    Destroy();
+    return;
+}

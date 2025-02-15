@@ -6,6 +6,7 @@
 #include "Character/CharacterBase.h"
 #include "GameFramework/Actor.h"
 #include "UI/BattlePanelWidget.h"
+#include "UI/HeroBagWidget.h"
 #include "UIManager.generated.h"
 
 UCLASS()
@@ -19,13 +20,17 @@ public:
 	void ShowBattlePanel(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr);
 	void HideBattlePanel();
 
+	void ShowHeroBag();
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	TObjectPtr<UBattlePanelWidget> BattlePanel;
+	TObjectPtr<UHeroBagWidget> HeroBag;
 
 public:
 	TSubclassOf<UBattlePanelWidget> BattlePanelWidget;
+	TSubclassOf<UHeroBagWidget> HeroBagWidget;
 
 };

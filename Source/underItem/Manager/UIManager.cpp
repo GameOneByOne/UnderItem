@@ -6,6 +6,7 @@
 
 namespace {
 	const FString BATTLE_PANEL_WIDGET_REF = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/UI/UBP_BattlePanelWidget.UBP_BattlePanelWidget_C'");
+	const FString HERO_BAG_WIDGET_REF = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/UI/UBP_HeroBagWidget.UBP_HeroBagWidget_C'");
 }
 
 
@@ -13,6 +14,7 @@ AUIManager::AUIManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	BattlePanelWidget = LoadClass<UBattlePanelWidget>(this, *BATTLE_PANEL_WIDGET_REF);
+	HeroBagWidget = LoadClass<UHeroBagWidget>(this, *HERO_BAG_WIDGET_REF);
 }
 
 void AUIManager::BeginPlay()
@@ -50,6 +52,17 @@ void AUIManager::HideBattlePanel()
 		BattlePanel->SetVisibility(ESlateVisibility::Collapsed);
 	}
 	return;
+}
+
+void AUIManager::ShowHeroBag()
+{
+	if (HeroBag->IsValidLowLevel()) {
+		return;
+	}
+	
+	HeroBag = CreateWidget<UHeroBagWidget>(Cast<APlayerController>(GWorld->GetFirstPlayerController()), HeroBagWidget);
+	HeroBag->Initialize();
+	HeroBag->AddToViewport();
 }
 
 void AUIManager::Tick(float DeltaTime)

@@ -4,7 +4,7 @@
 #include "Utils/log.h"
 
 namespace {
-	const float BATTLE_INTERVAL = 0.5f;
+	const float BATTLE_INTERVAL = 0.1f;
 }
 
 
@@ -49,7 +49,7 @@ void ABattleManager::Tick(float DeltaTime)
 		BattleStarted = false;
 		UIManager->HideBattlePanel();
 		if (Monster->IsDead()) {
-			Monster->Destroy();	
+			Monster->PreDestroy(Hero);
 		}
 	}
 	return;

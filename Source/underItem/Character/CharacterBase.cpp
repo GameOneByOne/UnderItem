@@ -3,7 +3,6 @@
 
 #include "CharacterBase.h"
 #include "Utils/log.h"
-#include "PaperFlipbook.h"
 #include "PaperFlipbookComponent.h"
 #include "Components/CapsuleComponent.h"
 
@@ -89,6 +88,11 @@ void ACharacterBase::RecoverHP(int32 HP)
 bool ACharacterBase::IsDead() const
 {
 	return CurrentHP == 0;	
+}
+
+void ACharacterBase::PreDestroy(TObjectPtr<ACharacterBase> ActorObj)
+{
+	return;
 }
 
 void ACharacterBase::Tick(float delta)

@@ -1,17 +1,19 @@
 #include "Manager/UIManager.h"
+#include "Kismet/GameplayStatics.h"
 #include "Utils/log.h"
 
 namespace {
 	const FString BATTLE_PANEL_WIDGET_REF = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/UI/UBP_BattlePanelWidget.UBP_BattlePanelWidget_C'");
 	const FString HERO_BAG_WIDGET_REF = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/UI/UBP_HeroBagWidget.UBP_HeroBagWidget_C'");
+	const FString HERO_STATUS_WIDGET_REF = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/UI/WBP_HeroStatusPanel.WBP_HeroStatusPanel_C'");
 }
-
 
 AUIManager::AUIManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	BattlePanelWidget = LoadClass<UBattlePanelWidget>(this, *BATTLE_PANEL_WIDGET_REF);
 	HeroBagWidget = LoadClass<UHeroBagWidget>(this, *HERO_BAG_WIDGET_REF);
+	HeroStatusPanelWidget = LoadClass<UHeroStatusPanel>(this, *HERO_STATUS_WIDGET_REF);
 }
 
 void AUIManager::BeginPlay()
@@ -47,7 +49,6 @@ void AUIManager::HideBattlePanel()
 		BattlePanel->SetMonsterObj(nullptr);
 		BattlePanel->SetVisibility(ESlateVisibility::Collapsed);
 	}
-	return;
 }
 
 void AUIManager::ShowHeroBag()
@@ -59,6 +60,18 @@ void AUIManager::ShowHeroBag()
 	HeroBag = CreateWidget<UHeroBagWidget>(Cast<APlayerController>(GWorld->GetFirstPlayerController()), HeroBagWidget);
 	HeroBag->Initialize();
 	HeroBag->AddToViewport();
+}
+
+void AUIManager::ShowHeroStatus()
+{
+	if (HeroStatusPanel->IsValidLowLevel()) {
+		return;
+	}
+	
+	HeroStatusPanel = CreateWidget<UHeroStatusPanel>(Cast<APlayerController>(GWorld->GetFirstPlayerController()), HeroStatusPanelWidget);
+	HeroStatusPanel->Initialize();
+	HeroStatusPanel->SetHeroPtr(Cast<AHero>(UGameplayStatics::GetActorOfClass(GetWorld(), AHero::StaticClass())));
+	HeroStatusPanel->AddToViewport();
 }
 
 void AUIManager::Tick(float DeltaTime)

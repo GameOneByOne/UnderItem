@@ -9,9 +9,9 @@ bool UHeroStatusPanel::Initialize()
         return false;
     }
 
-    //HeroHPText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroHP);
-    //HeroAttackText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroAttack);
-    //HeroDefenseText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroDefense);
+    HeroHPText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroHP);
+    HeroAttackText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroAttack);
+    HeroDefenseText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroDefense);
     return true;
 }
 

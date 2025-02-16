@@ -29,4 +29,5 @@ void AGameManager::BeginPlay()
 
 	// 显示UI
 	UIManager->ShowHeroBag();
+	UIManager->ShowHeroStatus();
 }

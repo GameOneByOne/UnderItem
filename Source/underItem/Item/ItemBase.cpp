@@ -37,7 +37,6 @@ void UItemBase::SetItem(const FString& ItemName, int ItemCount)
 
 void UItemBase::Use(TObjectPtr<ACharacterBase> CharacterObj)
 {
-	Count--;
 	return;
 }
 

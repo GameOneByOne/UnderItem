@@ -1,8 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Character/Hero.h"
-
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
@@ -12,9 +8,9 @@
 #include "Utils/log.h"
 
 namespace {
-    const FString PLAYER_INPUT_MAPPING_REF = TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Input/IMC_PlayerInputMap.IMC_PlayerInputMap'");
-    const FString PLAYER_INPUT_ACTION_MOVE_REF = TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Move.IA_Move'");
-    const FString PLAYER_INPUT_ACTION_INTERACT_REF = TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Interact.IA_Interact'");
+const FString PLAYER_INPUT_MAPPING_REF = TEXT("/Script/EnhancedInput.InputMappingContext'/Game/Input/IMC_PlayerInputMap.IMC_PlayerInputMap'");
+const FString PLAYER_INPUT_ACTION_MOVE_REF = TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Move.IA_Move'");
+const FString PLAYER_INPUT_ACTION_INTERACT_REF = TEXT("/Script/EnhancedInput.InputAction'/Game/Input/IA_Interact.IA_Interact'");
 }
 
 AHero::AHero()
@@ -44,7 +40,8 @@ void AHero::BeginPlay()
     if (APlayerController* PlayerController = Cast<APlayerController>(Controller)) {
         if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())) {
             Subsystem->AddMappingContext(InputMapping, 0);
-            INFOLOG("[Hero] Load Input Mapping Succeed.");
+        } else {
+            ERRORLOG("[Hero] Load Input Mapping Failed.");
         }
     }
 
@@ -75,7 +72,7 @@ void AHero::Interact(const FInputActionValue& Value)
 {
     bool IsAttack = Value.Get<bool>();
     if (InteractCharacter.IsValid()) {
-        INFOLOG("[Hero] Interact With Actor, %s", *InteractCharacter->GetName());
+        INFOLOG("[Hero] Interact With Actor %s", *InteractCharacter->GetName());
         InteractCharacter->BeginInteract(this);
     }
 }
@@ -88,7 +85,7 @@ void AHero::CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor*
     }
 
     InteractCharacter = Cast<ACharacterBase>(OtherActor);
-    INFOLOG("[Hero] Collision With Actor, %s", *InteractCharacter->GetName());
+    INFOLOG("[Hero] Collision With Actor %s", *InteractCharacter->GetName());
     return;
 }
 
@@ -97,7 +94,7 @@ void AHero::AddItem(TObjectPtr<UItemBase> NewItem)
     TArray<UUserWidget*> FoundWidgets;
     UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UHeroBagWidget::StaticClass(), false);
     if (FoundWidgets.IsEmpty()) {
-        ERRORLOG("[Hero] AddItem: No Widgets found.");
+        ERRORLOG("[Hero] No Widgets found.");
         return;
     }
 
@@ -113,14 +110,5 @@ void AHero::AddItem(TObjectPtr<UItemBase> NewItem)
     // 说明没有重复的则新建物品
     ItemList.Add(NewItem);
     Cast<UHeroBagWidget>(FoundWidgets[0])->Update();
-    INFOLOG("[Hero] AddItem: New Item %s", *NewItem->GetName());
     return;
 }
-
-void AHero::RemoveItem(const FString &ItemName, int Count)
-{
-    return;
-}
-
-
-

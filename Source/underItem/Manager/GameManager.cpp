@@ -9,7 +9,7 @@
 
 AGameManager::AGameManager()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void AGameManager::BeginPlay()
@@ -30,11 +30,3 @@ void AGameManager::BeginPlay()
 	// 显示UI
 	UIManager->ShowHeroBag();
 }
-
-// Called every frame
-void AGameManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

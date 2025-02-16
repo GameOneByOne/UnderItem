@@ -1,8 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "UI/BagItemWidget.h"
-
 #include "Character/Hero.h"
 #include "Utils/log.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,6 +23,5 @@ FEventReply UBagItemWidget::MouseDownEventDeal(FGeometry MyGeometry, const FPoin
 
     TObjectPtr<AHero> HeroPtr = Cast<AHero>(UGameplayStatics::GetActorOfClass(GetWorld(), AHero::StaticClass()));
     ItemInfo->Use(HeroPtr);
-
     return Reply;
 }

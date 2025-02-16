@@ -10,23 +10,20 @@ UCLASS()
 class UNDERITEM_API ABattleManager : public AActor
 {
 	GENERATED_BODY()
+	
+public:	
+	ABattleManager();
+	virtual void Tick(float DeltaTime) override;
+	void StartBattle(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr);
+	
+protected:
+	virtual void BeginPlay() override;
 
 private:
 	bool BattleStarted = false;
 	bool ShouldHeroBattle = false;
-	TObjectPtr<ACharacterBase> Hero = nullptr;
-	TObjectPtr<ACharacterBase> Monster = nullptr;
-	
-public:	
-	ABattleManager();
-
-protected:
-	virtual void BeginPlay() override;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
-	void StartBattle(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr);
-
-private:
 	TObjectPtr<AUIManager> UIManager;
+	TObjectPtr<ACharacterBase> Hero;
+	TObjectPtr<ACharacterBase> Monster;
+
 };

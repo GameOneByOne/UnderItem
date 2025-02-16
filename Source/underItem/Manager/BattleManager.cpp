@@ -1,5 +1,4 @@
 #include "Manager/BattleManager.h"
-
 #include "Kismet/GameplayStatics.h"
 #include "Utils/log.h"
 
@@ -11,13 +10,11 @@ namespace {
 ABattleManager::ABattleManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 void ABattleManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
 	UIManager = Cast<AUIManager>(UGameplayStatics::GetActorOfClass(GetWorld(), AUIManager::StaticClass()));
 }
 
@@ -45,7 +42,6 @@ void ABattleManager::Tick(float DeltaTime)
 
 	// 判断战斗是否结束
 	if (Hero->IsDead() || Monster->IsDead()) {
-		INFOLOG("[Battle Mgr] Battle Is Ended. Winner Is %s", Hero->IsDead() ? TEXT("Monster") : TEXT("Hero"));
 		BattleStarted = false;
 		UIManager->HideBattlePanel();
 		if (Monster->IsDead()) {
@@ -59,7 +55,6 @@ void ABattleManager::StartBattle(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<
 {
 	this->Hero = HeroPtr;
 	this->Monster = MonsterPtr;
-	BattleStarted = true;
 	FRandomStream RandomStream;
 	RandomStream.GenerateNewSeed();
 	if (RandomStream.RandRange(1, 100) <= 50) {
@@ -67,6 +62,7 @@ void ABattleManager::StartBattle(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<
 	}
 
 	UIManager->ShowBattlePanel(HeroPtr, MonsterPtr);
+	BattleStarted = true;
 	return;
 }
 

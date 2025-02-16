@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -18,12 +16,12 @@ private:
 	
 public:	
 	UItemBase();
-	void SetItem(const FString& ItemName);
+	void SetItem(const FString& ItemName, int ItemCount = 1);
 	virtual void Use(TObjectPtr<ACharacterBase> CharacterObj);
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FItemConfig ItemConfig;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int Count = 1;
+	int Count = 0;
 };

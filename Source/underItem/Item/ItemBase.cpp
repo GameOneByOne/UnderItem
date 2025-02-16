@@ -16,21 +16,22 @@ UItemBase::UItemBase()
 	}
 }
 
-void UItemBase::SetItem(const FString& ItemName)
+void UItemBase::SetItem(const FString& ItemName, int ItemCount)
 {
 	if (ItemName.IsEmpty() || !ItemConfigDataTable->IsValidLowLevel()) {
-		ERRORLOG("[Character Base] Set Item Failed. Item Name is %s", *ItemName);
+		ERRORLOG("[Item Base] Set Item Failed. Item Name is %s", *ItemName);
 		return;
 	}
 	// 读取对应角色的配置数据
 	const FName ItemRowName = FName(ItemName);
 	FItemConfig *Config = ItemConfigDataTable->FindRow<FItemConfig>(ItemRowName, ItemRowName.ToString());
 	if (!Config) {
-		ERRORLOG("[Character Base] SetItem Failed Because Of Row Name Not Found.");
+		ERRORLOG("[Item Base] SetItem Failed Because Of Row Name Not Found. %s", *ItemName);
 		return;
 	}
-	INFOLOG("[Character Base] Set Item Config Succeed. Name is %s", *ItemName);
+
 	ItemConfig = *Config;
+	Count = ItemCount;
 	return;
 }
 

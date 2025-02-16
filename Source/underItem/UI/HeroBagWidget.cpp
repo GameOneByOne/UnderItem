@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "UI/HeroBagWidget.h"
 #include "Utils/log.h"
 #include "BagItemWidget.h"
@@ -24,7 +21,6 @@ bool UHeroBagWidget::Initialize()
     }
 
     HeroPtr = Cast<AHero>(UGameplayStatics::GetActorOfClass(GetWorld(), AHero::StaticClass()));
-
     return true;
 }
 
@@ -39,10 +35,7 @@ void UHeroBagWidget::Update()
         } else { // 显示物品
             TObjectPtr<UItemBase> Item = HeroPtr->ItemList[i];
             BagPanel->AddItem(Item);
-            INFOLOG("123123123123123    %s", *Item->GetName());
         }
     }
-
-    return;
 }
 

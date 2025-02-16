@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Manager/UIManager.h"
 #include "Utils/log.h"
 
@@ -20,7 +17,6 @@ AUIManager::AUIManager()
 void AUIManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AUIManager::ShowBattlePanel(TObjectPtr<ACharacterBase> HeroPtr, TObjectPtr<ACharacterBase> MonsterPtr)
@@ -68,6 +64,5 @@ void AUIManager::ShowHeroBag()
 void AUIManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

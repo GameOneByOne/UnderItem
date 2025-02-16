@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -23,7 +21,6 @@ public:
 	void Move(const FInputActionValue& Value);
 	void Interact(const FInputActionValue& Value);
 	void AddItem(TObjectPtr<UItemBase> NewItem);
-	void RemoveItem(const FString &ItemName, int Count = 1);
 	
 	UFUNCTION(Blueprintable)
 	void CollisionWithActor(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
@@ -42,6 +39,5 @@ private:
 	TObjectPtr<UInputMappingContext> InputMapping;
 	TObjectPtr<UInputAction> InputActionMove;
 	TObjectPtr<UInputAction> InputActionInteract;
-
 	TSoftObjectPtr<ACharacterBase> InteractCharacter;
 };

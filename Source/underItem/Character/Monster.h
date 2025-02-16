@@ -6,9 +6,7 @@
 #include "Character/CharacterBase.h"
 #include "Monster.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class UNDERITEM_API AMonster : public ACharacterBase
 {

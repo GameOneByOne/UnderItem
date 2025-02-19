@@ -6,6 +6,8 @@
 #include "Config/CharacterConfig.h"
 #include "CharacterBase.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCharacterDead);
+
 
 UCLASS()
 class UNDERITEM_API ACharacterBase : public APaperCharacter
@@ -26,6 +28,7 @@ public:
 	int32 CurrentHP;
 	int32 CurrentAttackPower;
 	int32 CurrentDefensePower;
+	FOnCharacterDead OnCharacterDead;
 
 protected:
 	virtual void BeginPlay() override;

@@ -80,5 +80,6 @@ bool ACharacterBase::IsDead() const
 
 void ACharacterBase::PreDestroy(TObjectPtr<ACharacterBase> ActorObj)
 {
+	OnCharacterDead.Broadcast();
 	return;
 }

@@ -16,6 +16,10 @@ public:
 	void SetLevel(int32 Level);
 	int NextLevel();
 
+public:
+	UFUNCTION(BlueprintCallable)
+	void DealCharacterDead();
+
 protected:
 	virtual void BeginPlay() override;
 	

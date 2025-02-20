@@ -25,6 +25,7 @@ void AMonster::PreDestroy(TObjectPtr<ACharacterBase> ActorObj)
         Item->SetItem(Iter.ItemName);
         Cast<AHero>(ActorObj)->AddItem(Item);
     }
+    OnMonsterDead.Broadcast();
     Destroy();
     return;
 }

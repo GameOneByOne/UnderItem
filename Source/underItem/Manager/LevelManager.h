@@ -5,6 +5,10 @@
 #include "GameFramework/Actor.h"
 #include "LevelManager.generated.h"
 
+enum class ELevelStatus {
+	SUCCEED, DATA_NOT_LOAD, DATA_NOT_FIND, LEVEL_END
+};
+
 UCLASS()
 class UNDERITEM_API ALevelManager : public AActor
 {
@@ -13,8 +17,12 @@ class UNDERITEM_API ALevelManager : public AActor
 public:
 	ALevelManager();
 	void Generate();
-	void SetLevel(int32 Level);
-	int NextLevel();
+	ELevelStatus SetLevel(int32 Level);
+	ELevelStatus NextLevel();
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void DealCharacterDead();
 
 protected:
 	virtual void BeginPlay() override;

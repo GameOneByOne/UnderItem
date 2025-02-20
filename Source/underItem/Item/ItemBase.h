@@ -17,7 +17,7 @@ private:
 public:	
 	UItemBase();
 	void SetItem(const FString& ItemName, int ItemCount = 1);
-	virtual void Use(TObjectPtr<ACharacterBase> CharacterObj);
+	virtual void Use(TObjectPtr<ACharacterBase> CharacterObj); 
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

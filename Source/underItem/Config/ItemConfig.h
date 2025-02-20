@@ -32,4 +32,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32 RecoverHP = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 AttackBuff = 0;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 DefenseBuff = 0;
 };

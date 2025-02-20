@@ -6,6 +6,7 @@
 #include "Character/CharacterBase.h"
 #include "Monster.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMonsterDead);
 
 UCLASS()
 class UNDERITEM_API AMonster : public ACharacterBase
@@ -15,4 +16,7 @@ class UNDERITEM_API AMonster : public ACharacterBase
 public:
 	virtual void BeginInteract(TObjectPtr<ACharacterBase> ActorPtr) override;
 	virtual void PreDestroy(TObjectPtr<ACharacterBase> ActorObj) override;
+
+public:
+	FOnMonsterDead OnMonsterDead;
 };

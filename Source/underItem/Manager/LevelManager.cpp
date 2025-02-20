@@ -54,22 +54,24 @@ void ALevelManager::Generate()
 			// 开始生成
 			FVector Location = {static_cast<double>(RandomX), static_cast<double>(RandomY), 10};
 			FRotator Rotation = {0, 0, 0};
-			TObjectPtr<ACharacterBase> Monster = Cast<AMonster>(GetWorld()->SpawnActor(AMonster::StaticClass(), &Location, &Rotation));
+			TObjectPtr<AMonster> Monster = Cast<AMonster>(GetWorld()->SpawnActor(AMonster::StaticClass(), &Location, &Rotation));
 			if (Monster->IsValidLowLevel()) {
 				Monster->SetCharacter("Skeleton");
+				Monster->OnMonsterDead.AddDynamic(this, &ALevelManager::DealCharacterDead);
 			} else {
 				ERRORLOG("[Level Mgr] Spawn Actor failed.");
+				LevelConfig.GenerateMonsterNum--;
 			}
 			break;
 		}
 	}
 }
 
-void ALevelManager::SetLevel(int32 Level)
+ELevelStatus ALevelManager::SetLevel(int32 Level)
 {
 	if (!LevelConfigDataTable->IsValidLowLevel()) {
 		ERRORLOG("[Level Mgr] SetLevel Failed Because Of Data Type Not Loaded.");
-		return;
+		return ELevelStatus::DATA_NOT_LOAD;
 	}
 
 	// 读取对应关卡的配置数据
@@ -77,7 +79,7 @@ void ALevelManager::SetLevel(int32 Level)
 	FLevelConfig *Config = LevelConfigDataTable->FindRow<FLevelConfig>(LevelRowName, LevelRowName.ToString());
 	if (!Config) {
 		ERRORLOG("[Level Mgr] SetLevel Failed Because Of Row Name Not Found.");
-		return;
+		return ELevelStatus::LEVEL_END;
 	}
 	INFOLOG("[Level Mgr] Set Level Config to GenNum Is %d", Config->GenerateMonsterNum);
 	for (const auto &Iter : Config->MonsterGenerateLevelDistribution)
@@ -86,12 +88,22 @@ void ALevelManager::SetLevel(int32 Level)
 			FMath::TruncToInt(Iter.X), FMath::TruncToInt(Iter.Y));
 	}
 	LevelConfig = *Config;
-	return;
+	return ELevelStatus::SUCCEED;
 }
 
-int ALevelManager::NextLevel()
+ELevelStatus ALevelManager::NextLevel()
 {
-	SetLevel(LevelConfig.CurrentLevel + 1);
-	return LevelConfig.CurrentLevel;
+	return SetLevel(LevelConfig.CurrentLevel + 1);
+}
+
+void ALevelManager::DealCharacterDead()
+{
+	LevelConfig.GenerateMonsterNum--;
+	if (LevelConfig.GenerateMonsterNum == 0) {
+		if (NextLevel() == ELevelStatus::SUCCEED) {
+			Generate();
+		}
+	}
+	return;
 }
 

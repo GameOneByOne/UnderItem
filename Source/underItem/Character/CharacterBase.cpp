@@ -2,6 +2,7 @@
 #include "Utils/log.h"
 #include "PaperFlipbookComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Item/ItemBase.h"
 
 class UPaperFlipbookComponent;
 
@@ -71,6 +72,20 @@ void ACharacterBase::Attack(ACharacterBase* Opponent) const
 void ACharacterBase::RecoverHP(int32 HP)
 {
 	CurrentHP = FMath::Clamp(CurrentHP + HP, 0, CharacterConfig.MaxHP);
+}
+
+void ACharacterBase::EquipWeapon(TObjectPtr<UItemBase> WeaponObj)
+{
+	Weapon = WeaponObj;
+	CurrentAttackPower += WeaponObj->ItemConfig.AttackBuff;
+	return;
+}
+
+void ACharacterBase::EquipArmor(TObjectPtr<UItemBase> ArmorObj)
+{
+	Armor = ArmorObj;
+	CurrentDefensePower += ArmorObj->ItemConfig.DefenseBuff;
+	return;
 }
 
 bool ACharacterBase::IsDead() const

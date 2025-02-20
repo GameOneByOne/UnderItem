@@ -6,6 +6,10 @@
 
 void UEquipmentItem::Use(TObjectPtr<ACharacterBase> CharacterObj)
 {
+	if (Count == 0) {
+		return;
+	}
+
 	TArray<UUserWidget*> FoundWidgets;
 	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UHeroStatusPanel::StaticClass(), false);
 	if (FoundWidgets.IsEmpty()) {
@@ -19,5 +23,6 @@ void UEquipmentItem::Use(TObjectPtr<ACharacterBase> CharacterObj)
 	} else if (ItemConfig.ItemType == EItemType::Armour) {
 		CharacterObj->EquipArmor(this);
 	}
+	Count = FMath::Clamp(Count - 1, 0, Count);
 	return;
 }

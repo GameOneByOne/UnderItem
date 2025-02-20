@@ -17,6 +17,10 @@ public:
 	virtual bool Initialize() override;
 	UFUNCTION(BlueprintCallable)
 	FEventReply MouseDownEventDeal(FGeometry MyGeometry, const FPointerEvent& MouseEvent);
+	UFUNCTION(BlueprintCallable)
+	FText GetItemCountText();
+	UFUNCTION(BlueprintCallable)
+	FSlateBrush GetItemImage();
 
 public:
 	UPROPERTY(Blueprintable, BlueprintReadWrite, meta = (BindWidget))
@@ -25,4 +29,7 @@ public:
 	UTextBlock* ItemCountText;
 	UPROPERTY(Blueprintable, BlueprintReadWrite)
 	TObjectPtr<UItemBase> ItemInfo;
+
+private:
+	TObjectPtr<UTexture2D> DefaultItemImage;
 };

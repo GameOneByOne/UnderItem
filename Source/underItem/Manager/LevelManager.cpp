@@ -57,7 +57,7 @@ void ALevelManager::Generate()
 			TObjectPtr<AMonster> Monster = Cast<AMonster>(GetWorld()->SpawnActor(AMonster::StaticClass(), &Location, &Rotation));
 			if (Monster->IsValidLowLevel()) {
 				Monster->SetCharacter("Skeleton");
-				Monster->OnMonsterDead.AddDynamic(this, &ALevelManager::DealCharacterDead);
+				Monster->OnMonsterDead.AddDynamic(this, &ALevelManager::DealMonsterDead);
 			} else {
 				ERRORLOG("[Level Mgr] Spawn Actor failed.");
 				LevelConfig.GenerateMonsterNum--;
@@ -96,7 +96,7 @@ ELevelStatus ALevelManager::NextLevel()
 	return SetLevel(LevelConfig.CurrentLevel + 1);
 }
 
-void ALevelManager::DealCharacterDead()
+void ALevelManager::DealMonsterDead()
 {
 	LevelConfig.GenerateMonsterNum--;
 	if (LevelConfig.GenerateMonsterNum == 0) {

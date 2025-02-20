@@ -22,7 +22,7 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	void DealCharacterDead();
+	void DealMonsterDead();
 
 protected:
 	virtual void BeginPlay() override;

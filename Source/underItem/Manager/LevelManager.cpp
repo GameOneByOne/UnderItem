@@ -13,16 +13,14 @@ namespace {
 ALevelManager::ALevelManager()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	// 加载配置数据表格
-	static ConstructorHelpers::FObjectFinder<UDataTable> LoadDataTable(*LEVEL_CONFIG_DATATABLE_REF);
-	if (LoadDataTable.Succeeded()) {
-		LevelConfigDataTable = LoadDataTable.Object;
-	}
 }
 
 void ALevelManager::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// 加载配置数据表格
+	LevelConfigDataTable = LoadObject<UDataTable>(nullptr, *LEVEL_CONFIG_DATATABLE_REF);
 }
 
 void ALevelManager::Generate()

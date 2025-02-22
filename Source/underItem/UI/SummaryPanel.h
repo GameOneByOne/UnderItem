@@ -12,7 +12,9 @@ class UNDERITEM_API USummaryPanel : public UUserWidget
 	
 public:
 	virtual bool Initialize() override;
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> BeginGameBtn;
+	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> ExitGameBtn;
 
 private:

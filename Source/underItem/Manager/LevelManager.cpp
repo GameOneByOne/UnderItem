@@ -18,9 +18,6 @@ ALevelManager::ALevelManager()
 void ALevelManager::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// 加载配置数据表格
-	LevelConfigDataTable = LoadObject<UDataTable>(nullptr, *LEVEL_CONFIG_DATATABLE_REF);
 }
 
 void ALevelManager::Generate()
@@ -67,6 +64,11 @@ void ALevelManager::Generate()
 
 ELevelStatus ALevelManager::SetLevel(int32 Level)
 {
+	if (!LevelConfigDataTable->IsValidLowLevel()) {
+		// 加载配置数据表格
+		LevelConfigDataTable = LoadObject<UDataTable>(nullptr, *LEVEL_CONFIG_DATATABLE_REF);
+	}
+
 	if (!LevelConfigDataTable->IsValidLowLevel()) {
 		ERRORLOG("[Level Mgr] SetLevel Failed Because Of Data Type Not Loaded.");
 		return ELevelStatus::DATA_NOT_LOAD;

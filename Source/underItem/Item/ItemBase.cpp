@@ -18,10 +18,15 @@ UItemBase::UItemBase()
 
 void UItemBase::SetItem(const FString& ItemName, int ItemCount)
 {
-	if (ItemName.IsEmpty() || !ItemConfigDataTable->IsValidLowLevel()) {
+	if (!ItemConfigDataTable->IsValidLowLevel()) {
+		// 加载配置数据表格
+		ItemConfigDataTable = LoadObject<UDataTable>(nullptr, *ITEM_CONFIG_DATATABLE_REF);
+	}
+	if (!ItemConfigDataTable->IsValidLowLevel()) {
 		ERRORLOG("[Item Base] Set Item Failed. Item Name is %s", *ItemName);
 		return;
 	}
+
 	// 读取对应角色的配置数据
 	const FName ItemRowName = FName(ItemName);
 	FItemConfig *Config = ItemConfigDataTable->FindRow<FItemConfig>(ItemRowName, ItemRowName.ToString());

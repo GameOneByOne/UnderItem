@@ -12,11 +12,6 @@ const FString CHARACTER_CONFIG_DATATABLE_REF = TEXT("/Script/Engine.DataTable'/G
 
 ACharacterBase::ACharacterBase()
 {
-	static ConstructorHelpers::FObjectFinder<UDataTable> LoadDataTable(*CHARACTER_CONFIG_DATATABLE_REF);
-	if (LoadDataTable.Succeeded()) {
-		CharacterConfigDataTable = LoadDataTable.Object;
-	}
-
 	CollisionAndInteractComponent = CreateDefaultSubobject<UBoxComponent>("CollisionAndInteractComponent");
 	CollisionAndInteractComponent->SetupAttachment(RootComponent);
 	CollisionAndInteractComponent->SetBoxExtent({10,10,12});
@@ -38,7 +33,11 @@ void ACharacterBase::BeginPlay()
 
 bool ACharacterBase::SetCharacter(const FString& CharacterName)
 {
-	if (CharacterName.IsEmpty() || !CharacterConfigDataTable->IsValidLowLevel()) {
+	if (!CharacterConfigDataTable->IsValidLowLevel()) {
+		// 加载配置数据表格
+		CharacterConfigDataTable = LoadObject<UDataTable>(nullptr, *CHARACTER_CONFIG_DATATABLE_REF);
+	}
+	if (!CharacterConfigDataTable->IsValidLowLevel()) {
 		ERRORLOG("[Character Base] Set Character Failed. Character Name is %s", *CharacterName);
 		return false;
 	}

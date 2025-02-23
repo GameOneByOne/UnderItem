@@ -1,5 +1,6 @@
 #include "UI/SummaryPanel.h"
 #include "Utils/log.h"
+#include "GamePlay/MyGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -16,13 +17,11 @@ bool USummaryPanel::Initialize()
 
 void USummaryPanel::BeginGame()
 {
-	INFOLOG("1111111111111111");
-	UGameplayStatics::OpenLevel(GetWorld(), "OneLevel", true, FString("GameMode=") + NewGameModeClass->GetName())
+	UGameplayStatics::OpenLevel(GetWorld(), "OneLevel", true, FString("GameMode=") + AMyGameMode::StaticClass()->GetName());
 	return;
 }
 
 void USummaryPanel::EndGame()
 {
-	INFOLOG("2222222222222222");
 	return;
 }

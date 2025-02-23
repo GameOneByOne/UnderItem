@@ -75,6 +75,10 @@ void ACharacterBase::RecoverHP(int32 HP)
 
 void ACharacterBase::EquipWeapon(TObjectPtr<UItemBase> WeaponObj)
 {
+	// 先卸掉原来的装备
+	if (Weapon->IsValidLowLevel()) {
+		CurrentAttackPower -= Weapon->ItemConfig.AttackBuff;
+	}
 	Weapon = WeaponObj;
 	CurrentAttackPower += WeaponObj->ItemConfig.AttackBuff;
 	return;
@@ -82,6 +86,10 @@ void ACharacterBase::EquipWeapon(TObjectPtr<UItemBase> WeaponObj)
 
 void ACharacterBase::EquipArmor(TObjectPtr<UItemBase> ArmorObj)
 {
+	// 先卸掉原来的装备
+	if (Armor->IsValidLowLevel()) {
+		CurrentAttackPower -= Armor->ItemConfig.AttackBuff;
+	}
 	Armor = ArmorObj;
 	CurrentDefensePower += ArmorObj->ItemConfig.DefenseBuff;
 	return;

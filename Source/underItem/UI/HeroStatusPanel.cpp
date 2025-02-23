@@ -3,8 +3,8 @@
 #include "PaperSprite.h"
 
 namespace {
-    const FString DEFAULT_ITEM_IMAGE = "/Script/Engine.Texture2D'/Game/UI/Texture/ItemBox_24x24.ItemBox_24x24'";
-    const FVector2f IMAGE_SIZE = {38, 38};
+    const FString DEFAULT_SLOT_IMAGE = "/Script/Engine.Texture2D'/Game/UI/Texture/ItemBox_24x24.ItemBox_24x24'";
+    const FVector2f SLOT_SIZE = {38, 38};
 }
 
 bool UHeroStatusPanel::Initialize()
@@ -13,7 +13,7 @@ bool UHeroStatusPanel::Initialize()
         return false;
     }
 
-    static UTexture2D* LoadedTexture = LoadObject<UTexture2D>(nullptr, *DEFAULT_ITEM_IMAGE);
+    static UTexture2D* LoadedTexture = LoadObject<UTexture2D>(nullptr, *DEFAULT_SLOT_IMAGE);
     if (LoadedTexture->IsValidLowLevel()) {
         DefaultSlotImage = LoadedTexture;
     }
@@ -59,7 +59,7 @@ void UHeroStatusPanel::SetHeroPtr(TObjectPtr<AHero> Hero)
 FSlateBrush UHeroStatusPanel::GetWeaponImage()
 {
     FSlateBrush Brush;
-    Brush.SetImageSize(IMAGE_SIZE);
+    Brush.SetImageSize(SLOT_SIZE);
     if (!HeroObj->IsValidLowLevel() || !HeroObj->Weapon->IsValidLowLevel()) {
         Brush.SetResourceObject(DefaultSlotImage);
     } else {
@@ -79,7 +79,7 @@ FSlateBrush UHeroStatusPanel::GetWeaponImage()
 FSlateBrush UHeroStatusPanel::GetArmorImage()
 {
     FSlateBrush Brush;
-    Brush.SetImageSize(IMAGE_SIZE);
+    Brush.SetImageSize(SLOT_SIZE);
     if (!HeroObj->IsValidLowLevel() || !HeroObj->Armor->IsValidLowLevel()) {
         Brush.SetResourceObject(DefaultSlotImage);
     } else {

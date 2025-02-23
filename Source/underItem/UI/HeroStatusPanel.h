@@ -23,20 +23,25 @@ public:
 	FText GetHeroAttack();
 	UFUNCTION(BlueprintCallable)
 	FText GetHeroDefense();
-	void SetWeaponSlot(TObjectPtr<UItemBase> Weapon);
-	void SetArmorSlot(TObjectPtr<UItemBase> Armor);
+	UFUNCTION(BlueprintCallable)
+	FSlateBrush GetWeaponImage();
+	UFUNCTION(BlueprintCallable)
+	FSlateBrush GetArmorImage();
 	
 public:
-	UPROPERTY(Blueprintable, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* HeroHPText;
-	UPROPERTY(Blueprintable, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* HeroAttackText;
-	UPROPERTY(Blueprintable, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* HeroDefenseText;
-	UPROPERTY(Blueprintable, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UImage* WeaponSlot;
-	UPROPERTY(Blueprintable, BlueprintReadWrite, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UImage* ArmorSlot;
-	UPROPERTY(Blueprintable, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<AHero> HeroObj;
+
+private:
+	TObjectPtr<UTexture2D> DefaultSlotImage;
 };

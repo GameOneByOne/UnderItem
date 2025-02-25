@@ -1,6 +1,7 @@
 #include "UI/HeroStatusPanel.h"
 
 #include "PaperSprite.h"
+#include "Utils/log.h"
 
 namespace {
     const FString DEFAULT_SLOT_IMAGE = "/Script/Engine.Texture2D'/Game/UI/Texture/ItemBox_24x24.ItemBox_24x24'";
@@ -18,7 +19,7 @@ bool UHeroStatusPanel::Initialize()
         DefaultSlotImage = LoadedTexture;
     }
 
-    HeroHPText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroHP);
+    HeroHPBar->BrushDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroHP);
     HeroAttackText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroAttack);
     HeroDefenseText->TextDelegate.BindDynamic(this, &UHeroStatusPanel::GetHeroDefense);
     WeaponSlot->BrushDelegate.BindDynamic(this, &UHeroStatusPanel::GetWeaponImage);
@@ -26,13 +27,17 @@ bool UHeroStatusPanel::Initialize()
     return true;
 }
 
-FText UHeroStatusPanel::GetHeroHP()
+FSlateBrush UHeroStatusPanel::GetHeroHP()
 {
-    if (HeroObj->IsValidLowLevel()) {
-        return FText::AsNumber(HeroObj->CurrentHP);
+    FSlateBrush HPBrush = HeroHPBar->GetBrush();
+    FSlateBrush HPBrushBorder = HeroHpBarBorder->GetBrush();
+    if (!HeroObj->IsValidLowLevel()) {
+        HPBrush.SetImageSize({HPBrushBorder.GetImageSize().X - 20, HPBrush.GetImageSize().Y});
+    } else {
+        float HPPercentage = (float)(HeroObj->CurrentHP) / HeroObj->CharacterConfig.MaxHP;
+        HPBrush.SetImageSize({HPBrushBorder.GetImageSize().X * HPPercentage - 20, HPBrush.GetImageSize().Y});
     }
-    return FText::FromString("");
-
+    return HPBrush;
 }
 
 FText UHeroStatusPanel::GetHeroAttack()

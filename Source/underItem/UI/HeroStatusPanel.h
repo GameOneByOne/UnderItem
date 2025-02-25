@@ -18,7 +18,7 @@ public:
 	void SetHeroPtr(TObjectPtr<AHero> Hero);
 
 	UFUNCTION(BlueprintCallable)
-	FText GetHeroHP();
+	FSlateBrush GetHeroHP();
 	UFUNCTION(BlueprintCallable)
 	FText GetHeroAttack();
 	UFUNCTION(BlueprintCallable)
@@ -30,7 +30,9 @@ public:
 	
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	UTextBlock* HeroHPText;
+	UImage* HeroHPBar;
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* HeroHpBarBorder;
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* HeroAttackText;
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))

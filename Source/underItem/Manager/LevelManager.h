@@ -28,6 +28,8 @@ protected:
 	virtual void BeginPlay() override;
 	
 private:
+	FVector GetMonsterGenerateRandomLocation(TArray<AActor*> RangeActors) const;
+private:
 	TObjectPtr<UDataTable> LevelConfigDataTable = nullptr;
 	FLevelConfig LevelConfig;
 };

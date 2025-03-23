@@ -16,6 +16,7 @@ public:
 	ACharacterBase();
 	virtual void BeginInteract(TObjectPtr<ACharacterBase> ActorPtr);
 	virtual void PreDestroy(TObjectPtr<ACharacterBase> ActorObj);
+	bool SetRandomCharacterWithLevel(int32 Level);
 	bool SetCharacter(const FString& CharacterName);
 	void Attack(ACharacterBase* Opponent) const;
 	void RecoverHP(int32 HP);

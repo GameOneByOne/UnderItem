@@ -28,6 +28,9 @@ struct FCharacterConfig : public FTableRowBase
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int32 CharacterLevel;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FText CharacterName;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

@@ -58,6 +58,40 @@ bool ACharacterBase::SetCharacter(const FString& CharacterName)
 	return true;
 }
 
+bool ACharacterBase::SetRandomCharacterWithLevel(int32 Level)
+{
+	if (!CharacterConfigDataTable->IsValidLowLevel()) {
+		// 加载配置数据表格
+		CharacterConfigDataTable = LoadObject<UDataTable>(nullptr, *CHARACTER_CONFIG_DATATABLE_REF);
+	}
+	if (!CharacterConfigDataTable->IsValidLowLevel()) {
+		ERRORLOG("[Character Base] Set Character Failed. Character Level is %d", Level);
+		return false;
+	}
+	// 读取对应角色等级的配置数据
+	TArray<FCharacterConfig*> DataRows;
+	CharacterConfigDataTable->GetAllRows<FCharacterConfig>("GetAllRowsForLevel", DataRows);
+	TArray<FCharacterConfig*> WaittingSelectRows;
+	for (const auto &Row : DataRows) {
+		if (Row->CharacterLevel == Level) {
+			WaittingSelectRows.Push(Row);
+		}
+	}
+	if (WaittingSelectRows.Num() == 0) {
+		return false;
+	}
+
+	FRandomStream RandomStream;
+	RandomStream.GenerateNewSeed();
+	int32 Result = RandomStream.RandRange(0, WaittingSelectRows.Num() - 1);
+	CharacterConfig = *WaittingSelectRows[Result];
+	CurrentHP = CharacterConfig.MaxHP;
+	CurrentAttackPower = CharacterConfig.AttackPower;
+	CurrentDefensePower = CharacterConfig.DefensePower;
+	GetSprite()->SetFlipbook(CharacterConfig.IdleFlipbook);
+	return true;
+}
+
 void ACharacterBase::BeginInteract(TObjectPtr<ACharacterBase> ActorPtr)
 {
 	return;

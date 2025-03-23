@@ -35,23 +35,12 @@ void ALevelManager::Generate()
 			if (Result > TotalProbability) {
 				continue;
 			}
-
-			// 选定一个生成范围
-			RandomStream.GenerateNewSeed();
-			int32 RangeIndex = RandomStream.RandRange(0, RangeActors.Num() - 1);
-			FVector Origin, Extend;
-			RangeActors[RangeIndex]->GetActorBounds(true, Origin, Extend);
-			RandomStream.GenerateNewSeed();
-			int32 RandomX = RandomStream.RandRange(Origin.X - Extend.X / 2, Origin.X + Extend.X / 2);
-			RandomStream.GenerateNewSeed();
-			int32 RandomY = RandomStream.RandRange(Origin.Y - Extend.Y / 2, Origin.Y + Extend.Y / 2);
-			
 			// 开始生成
-			FVector Location = {static_cast<double>(RandomX), static_cast<double>(RandomY), 10};
+			FVector Location = GetMonsterGenerateRandomLocation(RangeActors);
 			FRotator Rotation = {0, 0, 0};
 			TObjectPtr<AMonster> Monster = Cast<AMonster>(GetWorld()->SpawnActor(AMonster::StaticClass(), &Location, &Rotation));
 			if (Monster->IsValidLowLevel()) {
-				Monster->SetCharacter("Skeleton");
+				Monster->SetRandomCharacterWithLevel(Iter.X);
 				Monster->OnMonsterDead.AddDynamic(this, &ALevelManager::DealMonsterDead);
 			} else {
 				ERRORLOG("[Level Mgr] Spawn Actor failed.");
@@ -60,6 +49,20 @@ void ALevelManager::Generate()
 			break;
 		}
 	}
+}
+
+FVector ALevelManager::GetMonsterGenerateRandomLocation(TArray<AActor*> RangeActors) const
+{
+	FRandomStream RandomStream;
+	RandomStream.GenerateNewSeed();
+	int32 RangeIndex = RandomStream.RandRange(0, RangeActors.Num() - 1);
+	FVector Origin, Extend;
+	RangeActors[RangeIndex]->GetActorBounds(true, Origin, Extend);
+	RandomStream.GenerateNewSeed();
+	int32 RandomX = RandomStream.RandRange(Origin.X - Extend.X / 2, Origin.X + Extend.X / 2);
+	RandomStream.GenerateNewSeed();
+	int32 RandomY = RandomStream.RandRange(Origin.Y - Extend.Y / 2, Origin.Y + Extend.Y / 2);
+	return {static_cast<double>(RandomX), static_cast<double>(RandomY), 10};
 }
 
 ELevelStatus ALevelManager::SetLevel(int32 Level)
